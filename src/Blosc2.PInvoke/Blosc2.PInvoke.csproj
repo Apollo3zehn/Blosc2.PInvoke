@@ -1,0 +1,75 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>An inofficial .NET Standard wrapper for the BLOSC v2 implementation.</Description>
+    <PackageTags>Blosc Blosc2 PInvoke CSharp .NETStandard Windows Linux</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <IsWindows Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'True'">True</IsWindows>
+    <IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'True'">True</IsLinux>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(IsPublicBuild)' == 'True'">
+    <Content Include="./../../artifacts/bin32/blosc/Release/blosc2.dll" Link="runtimes/win-x86/native/blosc2.dll">
+      <PackagePath>runtimes/win-x86/native</PackagePath>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="./../../artifacts/bin64/blosc/Release/blosc2.dll" Link="runtimes/win-x64/native/blosc2.dll">
+      <PackagePath>runtimes/win-x64/native</PackagePath>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="./../../artifacts/download/bin32/libblosc2.so" Link="runtimes/linux-x86/native/libblosc2.so">
+      <PackagePath>runtimes/linux-x86/native</PackagePath>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="./../../artifacts/download/bin64/libblosc2.so" Link="runtimes/linux-x64/native/libblosc2.so">
+      <PackagePath>runtimes/linux-x64/native</PackagePath>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(IsPublicBuild)' == '' AND $(IsWindows) == 'True'">
+    <Content Include="./../../artifacts/bin32/blosc/Release/blosc2.dll" Link="runtimes/win-x86/native/blosc2.dll">
+      <PackagePath>runtimes/win-x86/native</PackagePath>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="./../../artifacts/bin64/blosc/Release/blosc2.dll" Link="runtimes/win-x64/native/blosc2.dll">
+      <PackagePath>runtimes/win-x64/native</PackagePath>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(IsPublicBuild)' == '' AND $(IsLinux) == 'True'">
+    <Content Include="./../../artifacts/bin32/blosc/libblosc2.so" Link="runtimes/linux-x86/native/libblosc2.so">
+      <PackagePath>runtimes/linux-x86/native</PackagePath>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="./../../artifacts/bin64/blosc/libblosc2.so" Link="runtimes/linux-x64/native/libblosc2.so">
+      <PackagePath>runtimes/linux-x64/native</PackagePath>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="PInvoke\Blosc.tt">
+      <LastGenOutput>Blosc.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="PInvoke\Blosc.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Blosc.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+</Project>

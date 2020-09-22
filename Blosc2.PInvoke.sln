@@ -1,0 +1,69 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8449A872-2591-4C77-A810-974A20DD0227}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D422FCDF-E2F9-4FCC-8BAA-81237E70455D}"
+	ProjectSection(SolutionItems) = preProject
+		.appveyor.yml = .appveyor.yml
+		.gitignore = .gitignore
+		.gitmodules = .gitmodules
+		Directory.Build.props = Directory.Build.props
+		Directory.Build.targets = Directory.Build.targets
+		init_solution.ps1 = init_solution.ps1
+		LICENSE.md = LICENSE.md
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{15DEDCE6-3981-4AF5-8F1C-0DA8A070F91F}"
+	ProjectSection(SolutionItems) = preProject
+		build\build.props = build\build.props
+		build\build.targets = build\build.targets
+		build\Start-ArtifactDownload.ps1 = build\Start-ArtifactDownload.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{2B4BA2BB-B561-4301-A1B9-9E59E58BE8EF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blosc2.PInvoke", "src\Blosc2.PInvoke\Blosc2.PInvoke.csproj", "{5355AFFA-5B8B-4D74-B14B-1CCE540E3C3B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blosc2.PInvoke.Tests", "tests\Blosc.PInvoke.Tests\Blosc2.PInvoke.Tests.csproj", "{7B0BC1C7-D918-400A-85DF-8324188F3C8F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5355AFFA-5B8B-4D74-B14B-1CCE540E3C3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5355AFFA-5B8B-4D74-B14B-1CCE540E3C3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5355AFFA-5B8B-4D74-B14B-1CCE540E3C3B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5355AFFA-5B8B-4D74-B14B-1CCE540E3C3B}.Debug|x86.Build.0 = Debug|Any CPU
+		{5355AFFA-5B8B-4D74-B14B-1CCE540E3C3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5355AFFA-5B8B-4D74-B14B-1CCE540E3C3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5355AFFA-5B8B-4D74-B14B-1CCE540E3C3B}.Release|x86.ActiveCfg = Release|Any CPU
+		{5355AFFA-5B8B-4D74-B14B-1CCE540E3C3B}.Release|x86.Build.0 = Release|Any CPU
+		{7B0BC1C7-D918-400A-85DF-8324188F3C8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B0BC1C7-D918-400A-85DF-8324188F3C8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B0BC1C7-D918-400A-85DF-8324188F3C8F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7B0BC1C7-D918-400A-85DF-8324188F3C8F}.Debug|x86.Build.0 = Debug|Any CPU
+		{7B0BC1C7-D918-400A-85DF-8324188F3C8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B0BC1C7-D918-400A-85DF-8324188F3C8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B0BC1C7-D918-400A-85DF-8324188F3C8F}.Release|x86.ActiveCfg = Release|Any CPU
+		{7B0BC1C7-D918-400A-85DF-8324188F3C8F}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{15DEDCE6-3981-4AF5-8F1C-0DA8A070F91F} = {D422FCDF-E2F9-4FCC-8BAA-81237E70455D}
+		{5355AFFA-5B8B-4D74-B14B-1CCE540E3C3B} = {8449A872-2591-4C77-A810-974A20DD0227}
+		{7B0BC1C7-D918-400A-85DF-8324188F3C8F} = {2B4BA2BB-B561-4301-A1B9-9E59E58BE8EF}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F998BD6D-3E2B-4AA0-A7A4-FD84100C45A4}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,51 @@
+<#@ template language="C#" #>
+<#@ output extension=".cs" #>
+<#@ import namespace="System.Net" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+<# 
+	using var webClient = new WebClient();
+
+    var url = "./native/c-blosc2/blosc/blosc2.h";
+    var cstring = webClient.DownloadString(url); 
+    var csstring = "";
+
+    var pattern = "BLOSC_EXPORT.*?;";
+    var regex = new Regex(pattern, RegexOptions.Singleline);
+
+    foreach (var match in regex.Matches(cstring))
+    {
+        csstring += "[SuppressUnmanagedCodeSecurity]\n";
+        csstring += "[DllImport(BloscConstants.NATIVE_DLL_NAME)]\n";
+        csstring += match.ToString() + "\n\n";
+    }
+
+    csstring = Regex.Replace(csstring, @"BLOSC_EXPORT const char\*", "public static extern IntPtr");
+    csstring = Regex.Replace(csstring, @"BLOSC_EXPORT", "public static extern");
+    csstring = Regex.Replace(csstring, @"const ", "");
+    csstring = Regex.Replace(csstring, @"char\*\*", "ref IntPtr");
+    csstring = Regex.Replace(csstring, @"char\*", "[MarshalAs(UnmanagedType.LPStr)] string");
+    csstring = Regex.Replace(csstring, @"int32_t", "int");
+    csstring = Regex.Replace(csstring, @"int64_t", "long");
+    csstring = Regex.Replace(csstring, @"blosc_timestamp_t", "IntPtr");
+    csstring = Regex.Replace(csstring, @"\(void\)", "()");
+    csstring = Regex.Replace(csstring, @"size_t\*", "out ulong");
+    csstring = Regex.Replace(csstring, @"size_t", "ulong");
+    csstring = Regex.Replace(csstring, @"[a-zA-Z0-9_]+\s\*\*", "out IntPtr ");
+    csstring = Regex.Replace(csstring, @"[a-zA-Z0-9_]+\*\*", "out IntPtr");
+    csstring = Regex.Replace(csstring, @"[a-zA-Z0-9_]+\s\*", "IntPtr ");
+    csstring = Regex.Replace(csstring, @"[a-zA-Z0-9_]+\*", "IntPtr");
+    csstring = Regex.Replace(csstring, @"\n", "\n        ");
+    csstring = Regex.Replace(csstring, @"int compcode", "CompressorCodes compcode");
+#>
+using System;
+using System.Text;
+using System.Runtime.InteropServices;
+using System.Security;
+
+namespace Blosc2.PInvoke
+{
+    public static class Blosc
+    {
+        <# Write(csstring); #>
+    }
+}

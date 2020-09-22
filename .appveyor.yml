@@ -1,0 +1,101 @@
+version: '{build}'
+clone_depth: 1
+
+image:
+- Ubuntu
+- Visual Studio 2019
+
+environment:
+  ApiKey:
+    secure: SeomICfFXAQobyK5uMGeAhb0uljBxicG4Z56pWxWCXA=
+  SatelliteJobName: 'Image: Ubuntu'
+  FileName: 'libblosc2.so'
+
+branches:
+  only:
+  - master
+  - dev
+
+configuration:
+  - Release
+
+init:
+  - ps: git config --global core.autocrlf true
+
+install:
+- ps: |
+    if ($isLinux) 
+    { 
+      sudo apt-get update
+      sudo apt-get --yes install g++-multilib
+    }
+
+before_build:
+- ps: dotnet --info
+- ps: "Get-ChildItem Env:"
+- ps: ./init_solution.ps1
+- ps: Import-Module ./build/Start-ArtifactDownload.ps1 -Force
+- ps: | 
+    if ($isWindows) 
+    { 
+      New-Item -Force -ItemType directory -Path "./artifacts/download/bin32/"
+      Start-ArtifactDownload -JobName $env:SatelliteJobName -SourceFileName "lib32" -TargetFilePath "./artifacts/download/bin32/$env:FileName" -ApiKey $env:ApiKey
+      New-Item -Force -ItemType directory -Path "./artifacts/download/bin64/"
+      Start-ArtifactDownload -JobName $env:SatelliteJobName -SourceFileName "lib64" -TargetFilePath "./artifacts/download/bin64/$env:FileName" -ApiKey $env:ApiKey 
+    }
+
+build_script:
+- ps: |
+    if ($isLinux) 
+    { 
+      make --directory "./artifacts/bin32"
+      make --directory "./artifacts/bin64"
+
+      dotnet build ./src/Blosc2.PInvoke/Blosc2.PInvoke.csproj -c $Env:CONFIGURATION /p:Build=$Env:APPVEYOR_BUILD_NUMBER /p:IsFinalBuild=$Env:APPVEYOR_REPO_TAG
+    }
+    elseif ($isWindows)
+    { 
+      msbuild ./artifacts/bin32/blosc/blosc2_shared.vcxproj /p:Configuration=$Env:CONFIGURATION
+      msbuild ./artifacts/bin64/blosc/blosc2_shared.vcxproj /p:Configuration=$Env:CONFIGURATION
+
+      dotnet build ./src/Blosc2.PInvoke/Blosc2.PInvoke.csproj -c $Env:CONFIGURATION /p:Build=$Env:APPVEYOR_BUILD_NUMBER /p:IsFinalBuild=$Env:APPVEYOR_REPO_TAG /p:IsPublicBuild=True
+    }
+
+after_build:
+- ps: |
+    if ($isLinux) 
+    { 
+      Push-AppveyorArtifact "./artifacts/bin32/blosc/Release/$env:FileName" -FileName "lib32"
+      Push-AppveyorArtifact "./artifacts/bin64/blosc/Release/$env:FileName" -FileName "lib64"
+    }
+
+test_script:
+- ps: |
+dotnet test ./tests/Blosc2.PInvoke.Tests -c $Env:CONFIGURATION /p:BuildProjectReferences=false
+
+artifacts:
+  - path: ./artifacts/packages/**/*.nupkg
+
+deploy:
+
+# MyGet (dev)
+  - provider: NuGet
+    server: https://www.myget.org/F/apollo3zehn-dev/api/v2/package
+    api_key:
+      secure: DVadlPknnKPMR4F2+3VqeU7BFFmtLcXDHzkySA590MqQNIdzbx8HRuaPwDVbHRqX
+    skip_symbols: true
+    artifact: /.*\.nupkg/ 
+    on:
+      branch: dev
+      CI_WINDOWS: true
+
+# NuGet (master)
+  - provider: NuGet
+    server: https://www.nuget.org/api/v2/package
+    api_key:
+      secure: WqZcnRwOmzIa+INti/HnihBrUz0u71rTRNElX/2wbuAIbzMX6SV8h4OxJtCaX2vN
+    skip_symbols: true
+    artifact: /.*\.nupkg/ 
+    on:
+      CI_WINDOWS: true
+      APPVEYOR_REPO_TAG: true
