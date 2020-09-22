@@ -1,7 +1,6 @@
 .vs/
 .vscode/
 artifacts/
-native/
 
 *.suo
 *.user

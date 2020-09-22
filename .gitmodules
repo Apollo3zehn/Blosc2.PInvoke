@@ -1,0 +1,3 @@
+[submodule "native/c-blosc2"]
+	path = native/c-blosc2
+	url = https://github.com/Blosc/c-blosc2
