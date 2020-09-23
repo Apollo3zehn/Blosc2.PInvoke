@@ -71,7 +71,7 @@ after_build:
 
 test_script:
 - ps: |
-dotnet test ./tests/Blosc2.PInvoke.Tests -c $Env:CONFIGURATION /p:BuildProjectReferences=false
+    dotnet test ./tests/Blosc2.PInvoke.Tests -c $Env:CONFIGURATION /p:BuildProjectReferences=false
 
 artifacts:
   - path: ./artifacts/packages/**/*.nupkg
