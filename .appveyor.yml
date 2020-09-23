@@ -65,8 +65,8 @@ after_build:
 - ps: |
     if ($isLinux) 
     { 
-      Push-AppveyorArtifact "./artifacts/bin32/blosc/Release/$env:FileName" -FileName "lib32"
-      Push-AppveyorArtifact "./artifacts/bin64/blosc/Release/$env:FileName" -FileName "lib64"
+      Push-AppveyorArtifact "./artifacts/bin32/blosc/$env:FileName" -FileName "lib32"
+      Push-AppveyorArtifact "./artifacts/bin64/blosc/$env:FileName" -FileName "lib64"
     }
 
 test_script:
