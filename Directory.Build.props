@@ -4,7 +4,7 @@
 
   <PropertyGroup>
     <PackageLicenseExpression Condition="$(PackageLicenseExpression) == ''">BSD-3-Clause</PackageLicenseExpression>
-    <PackageProjectUrl Condition="$(PackageProjectUrl) == ''">https://github.com/Apollo3zehn/EtherCAT.NET</PackageProjectUrl>
+    <PackageProjectUrl Condition="$(PackageProjectUrl) == ''">https://github.com/Apollo3zehn/Blosc2.PInvoke</PackageProjectUrl>
   </PropertyGroup>
 
 </Project>
