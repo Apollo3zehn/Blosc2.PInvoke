@@ -36,7 +36,7 @@ before_build:
 - ps: ./init_solution.ps1
 - ps: Import-Module ./build/Start-ArtifactDownload.ps1 -Force
 - ps: | 
-    if ($isWindows) 
+    if ($isLinux) 
     { 
       New-Item -Force -ItemType directory -Path "./artifacts/download/bin32/"
       Start-ArtifactDownload -JobName $env:SatelliteJobName -SourceFileName "lib32" -TargetFilePath "./artifacts/download/bin32/$env:FileName" -ApiKey $env:ApiKey
