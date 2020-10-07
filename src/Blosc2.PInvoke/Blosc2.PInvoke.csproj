@@ -13,19 +13,19 @@
   </PropertyGroup>
 
   <ItemGroup Condition="'$(IsPublicBuild)' == 'True'">
-    <Content Include="./../../artifacts/download/bin32/blosc/Release/blosc2.dll" Link="runtimes/win-x86/native/blosc2.dll">
+    <Content Include="./../../artifacts/download/bin32/blosc2.dll" Link="runtimes/win-x86/native/blosc2.dll">
       <PackagePath>runtimes/win-x86/native</PackagePath>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="./../../artifacts/download/bin64/blosc/Release/blosc2.dll" Link="runtimes/win-x64/native/blosc2.dll">
+    <Content Include="./../../artifacts/download/bin64/blosc2.dll" Link="runtimes/win-x64/native/blosc2.dll">
       <PackagePath>runtimes/win-x64/native</PackagePath>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="./../../artifacts/bin32/libblosc2.so" Link="runtimes/linux-x86/native/libblosc2.so">
+    <Content Include="./../../artifacts/bin32/blosc/Release/libblosc2.so" Link="runtimes/linux-x86/native/libblosc2.so">
       <PackagePath>runtimes/linux-x86/native</PackagePath>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="./../../artifacts/bin64/libblosc2.so" Link="runtimes/linux-x64/native/libblosc2.so">
+    <Content Include="./../../artifacts/bin64/blosc/Release/libblosc2.so" Link="runtimes/linux-x64/native/libblosc2.so">
       <PackagePath>runtimes/linux-x64/native</PackagePath>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
