@@ -21,11 +21,11 @@
       <PackagePath>runtimes/win-x64/native</PackagePath>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="./../../artifacts/bin32/blosc/Release/libblosc2.so" Link="runtimes/linux-x86/native/libblosc2.so">
+    <Content Include="./../../artifacts/bin32/blosc/libblosc2.so" Link="runtimes/linux-x86/native/libblosc2.so">
       <PackagePath>runtimes/linux-x86/native</PackagePath>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="./../../artifacts/bin64/blosc/Release/libblosc2.so" Link="runtimes/linux-x64/native/libblosc2.so">
+    <Content Include="./../../artifacts/bin64/blosc/libblosc2.so" Link="runtimes/linux-x64/native/libblosc2.so">
       <PackagePath>runtimes/linux-x64/native</PackagePath>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
