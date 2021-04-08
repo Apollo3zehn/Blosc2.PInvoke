@@ -1,5 +1,5 @@
 using System;
-using System.Text;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Security;
 
@@ -7,6 +7,34 @@ namespace Blosc2.PInvoke
 {
     public static class Blosc
     {
+        static Blosc()
+        {
+            // .NET Framework does not automatically load libraries from the native runtimes folder like .NET Core.
+            // Therefore, if running .NET Framework, switch the current directory to the native runtime folder
+            // before attempting to load the native HDF5 library.
+            bool changedCurrentDir = false;
+            var prevCurrentDir = Directory.GetCurrentDirectory();
+            if (RuntimeInformation.FrameworkDescription.Contains("Framework"))
+            {
+                var dllDir = Path.Combine(prevCurrentDir, string.Format(BloscConstants.WindowsDLLPath, Environment.Is64BitProcess ? "64" : "86"));
+                if (Directory.Exists(dllDir))
+                {
+                    Directory.SetCurrentDirectory(dllDir);
+                    changedCurrentDir = true;
+                }
+            }
+          
+            try
+            {
+                Blosc.blosc_init();
+            }
+            finally
+            {
+                if (changedCurrentDir)
+                    Directory.SetCurrentDirectory(prevCurrentDir);
+            }
+        }
+
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
         public static extern void blosc_init();

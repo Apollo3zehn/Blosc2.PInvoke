@@ -8,6 +8,8 @@ namespace Blosc2.PInvoke
 
         public const string NATIVE_DLL_NAME = "blosc2";
 
+        public const string WindowsDLLPath = @"runtimes\win-x{0}\native";
+
         public static blosc2_cparams BLOSC2_CPARAMS_DEFAULTS = new blosc2_cparams()
         {
             compcode = CompressorCodes.BLOSC_BLOSCLZ,

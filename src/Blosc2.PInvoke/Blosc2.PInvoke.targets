@@ -1,0 +1,39 @@
+﻿<Project>
+
+  <!-- .targets file for .NET Framework -->
+  <!-- Copy files depending on the architecture. -->
+  <Target Name="CopyNativeFilesToOutput" BeforeTargets="BeforeBuild">
+    <PropertyGroup Condition="'$(UsingMicrosoftNETSdk)' == 'True' AND
+                              '$(_UsingDefaultPlatformTarget)' == 'True' AND
+                              ($(RuntimeIdentifier.EndsWith('-x86')) or $(RuntimeIdentifier.Contains('-x86-'))) AND
+                              '$(Prefer32Bit)' == 'False'">
+      <Prefer32Bit>True</Prefer32Bit>
+      <Prefer32BitToFixDotnetBug>True</Prefer32BitToFixDotnetBug>
+    </PropertyGroup>
+    <Message Condition="'$(Prefer32BitToFixDotnetBug)' == 'True'" Importance="high" Text="Blosc2.PInvoke.1.10.targets: Build property `Prefer32Bit` set to `True` to mitigate https://github.com/dotnet/sdk/issues/1545"/>
+
+    <!-- Place native runtimes in the appropriate platform folder for AnyCPU (64-bit preferred) builds. -->
+    <!-- Else, place the runtimes directly in the build output. -->
+    <PropertyGroup Condition="'$(PlatformTarget)' == 'AnyCPU' AND '$(Prefer32Bit)' != 'True'">
+      <Blosc2RuntimeDir_x86>runtimes\win-x86\native\</Blosc2RuntimeDir_x86>
+      <Blosc2RuntimeDir_x64>runtimes\win-x64\native\</Blosc2RuntimeDir_x64>
+    </PropertyGroup>
+    
+    <!-- x86 -->
+    <ItemGroup Condition="'$(PlatformTarget)' == 'AnyCPU' OR ('$(UsingMicrosoftNETSdk)' != 'True' AND '$(PlatformTarget)' == 'x86')">
+      <Content Include="$(MSBuildThisFileDirectory)..\..\runtimes\win-x86\**\blosc2.dll">
+        <Link>$(Blosc2RuntimeDir_x86)blosc2.dll</Link>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+    
+    <!-- x64 -->
+    <ItemGroup Condition="('$(PlatformTarget)' == 'AnyCPU' AND '$(Prefer32Bit)' != 'True') OR ('$(UsingMicrosoftNETSdk)' != 'True' AND '$(PlatformTarget)' == 'x64')">
+      <Content Include="$(MSBuildThisFileDirectory)..\..\runtimes\win-x64\**\blosc2.dll">
+        <Link>$(Blosc2RuntimeDir_x64)blosc2.dll</Link>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+  </Target>
+  
+</Project>

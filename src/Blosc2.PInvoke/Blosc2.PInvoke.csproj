@@ -72,4 +72,11 @@
     </Compile>
   </ItemGroup>
 
+    <!-- Add build target file in NuGet package for .NET Framework packages.config support. -->
+  <ItemGroup>
+    <Content Include="Blosc2.PInvoke.targets">
+      <PackagePath>build/net461;buildTransitive/net461</PackagePath>
+    </Content>
+  </ItemGroup>
+
 </Project>
