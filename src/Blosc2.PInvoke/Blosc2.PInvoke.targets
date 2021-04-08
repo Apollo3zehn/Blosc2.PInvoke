@@ -2,7 +2,7 @@
 
   <!-- .targets file for .NET Framework -->
   <!-- Copy files depending on the architecture. -->
-  <Target Name="CopyNativeFilesToOutput" BeforeTargets="BeforeBuild">
+  <Target Name="Blosc2_CopyNativeFilesToOutput" BeforeTargets="BeforeBuild">
     <PropertyGroup Condition="'$(UsingMicrosoftNETSdk)' == 'True' AND
                               '$(_UsingDefaultPlatformTarget)' == 'True' AND
                               ($(RuntimeIdentifier.EndsWith('-x86')) or $(RuntimeIdentifier.Contains('-x86-'))) AND
