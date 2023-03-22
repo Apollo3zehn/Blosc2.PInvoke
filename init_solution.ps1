@@ -9,11 +9,11 @@ Set-Location -Path $path
 
 if ($IsWindows)
 {
-	cmake ./../../native/c-blosc2 -DCMAKE_CONFIGURATION_TYPES:STRING="Debug;Release" -G "Visual Studio 16 2019" -A "Win32"
+	cmake ./../../native/c-blosc2 -DCMAKE_CONFIGURATION_TYPES:STRING="Debug;Release" -G "Visual Studio 16 2019" -A "Win32"  -DBUILD_TESTS=OFF
 }
 elseif ($IsLinux)
 {
-    cmake ./../../native/c-blosc2 -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS=-m32 -DCMAKE_CXX_FLAGS=-m32 -DCMAKE_TRY_COMPILE_TARGET_TYPE=STATIC_LIBRARY
+    cmake ./../../native/c-blosc2 -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS=-m32 -DCMAKE_CXX_FLAGS=-m32 -DCMAKE_TRY_COMPILE_TARGET_TYPE=STATIC_LIBRARY -DBUILD_TESTS=OFF
 }
 else 
 {
@@ -28,11 +28,11 @@ Set-Location -Path $path
 
 if ($IsWindows)
 {
-	cmake ./../../native/c-blosc2 -DCMAKE_CONFIGURATION_TYPES:STRING="Debug;Release" -G "Visual Studio 16 2019" -A "x64"
+	cmake ./../../native/c-blosc2 -DCMAKE_CONFIGURATION_TYPES:STRING="Debug;Release" -G "Visual Studio 16 2019" -A "x64" -DBUILD_TESTS=OFF
 }
 elseif ($IsLinux)
 {
-    cmake ./../../native/c-blosc2 -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS=-m64 -DCMAKE_CXX_FLAGS=-m64
+    cmake ./../../native/c-blosc2 -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS=-m64 -DCMAKE_CXX_FLAGS=-m64 -DBUILD_TESTS=OFF
 }
 else 
 {
