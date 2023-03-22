@@ -24,7 +24,7 @@ namespace Blosc2.PInvoke.Tests
             var compressors = Marshal.PtrToStringAnsi(Blosc.blosc2_list_compressors());
 
             // Assert
-            Assert.True(compressors == "blosclz,lz4,lz4hc,lizard,zlib,zstd");
+            Assert.Equal("blosclz,lz4,lz4hc,lizard,zlib,zstd", compressors);
         }
     }
 }
