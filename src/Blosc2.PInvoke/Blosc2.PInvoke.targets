@@ -21,7 +21,7 @@
     
     <!-- x86 -->
     <ItemGroup Condition="'$(PlatformTarget)' == 'AnyCPU' OR ('$(UsingMicrosoftNETSdk)' != 'True' AND '$(PlatformTarget)' == 'x86')">
-      <Content Include="$(MSBuildThisFileDirectory)..\..\runtimes\win-x86\**\blosc2.dll">
+      <Content Include="$(MSBuildThisFileDirectory)..\..\runtimes\win-x86\**\libblosc2.dll">
         <Link>$(Blosc2RuntimeDir_x86)blosc2.dll</Link>
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
@@ -29,7 +29,7 @@
     
     <!-- x64 -->
     <ItemGroup Condition="('$(PlatformTarget)' == 'AnyCPU' AND '$(Prefer32Bit)' != 'True') OR ('$(UsingMicrosoftNETSdk)' != 'True' AND '$(PlatformTarget)' == 'x64')">
-      <Content Include="$(MSBuildThisFileDirectory)..\..\runtimes\win-x64\**\blosc2.dll">
+      <Content Include="$(MSBuildThisFileDirectory)..\..\runtimes\win-x64\**\libblosc2.dll">
         <Link>$(Blosc2RuntimeDir_x64)blosc2.dll</Link>
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
