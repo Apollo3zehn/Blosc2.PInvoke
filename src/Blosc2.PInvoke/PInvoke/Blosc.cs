@@ -26,7 +26,7 @@ namespace Blosc2.PInvoke
           
             try
             {
-                Blosc.blosc_init();
+                Blosc.blosc2_init();
             }
             finally
             {
@@ -37,98 +37,116 @@ namespace Blosc2.PInvoke
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern void blosc_init();
+        public static extern void blosc2_init();
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern void blosc_destroy();
+        public static extern void blosc2_destroy();
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern int blosc_compress(int clevel, int doshuffle, ulong typesize,
-                                        ulong nbytes, IntPtr src, IntPtr dest,
-                                        ulong destsize);
+        public static extern int blosc1_compress(int clevel, int doshuffle, ulong typesize,
+                                         ulong nbytes, IntPtr src, IntPtr dest,
+                                         ulong destsize);
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern int blosc_decompress(IntPtr src, IntPtr dest, ulong destsize);
+        public static extern int blosc1_decompress(IntPtr src, IntPtr dest, ulong destsize);
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern int blosc_getitem(IntPtr src, int start, int nitems, IntPtr dest);
+        public static extern int blosc1_getitem(IntPtr src, int start, int nitems, IntPtr dest);
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern void blosc_set_threads_callback(blosc_threads_callback callback, IntPtr callback_data);
+        public static extern int blosc2_getitem(IntPtr src, int srcsize, int start, int nitems,
+                                        IntPtr dest, int destsize);
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern int blosc_get_nthreads();
+        public static extern void blosc2_set_threads_callback(blosc_threads_callback callback, IntPtr callback_data);
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern int blosc_set_nthreads(int nthreads);
+        public static extern short blosc2_get_nthreads();
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern IntPtr blosc_get_compressor();
+        public static extern short blosc2_set_nthreads(short nthreads);
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern int blosc_set_compressor([MarshalAs(UnmanagedType.LPStr)] string compname);
+        public static extern IntPtr blosc1_get_compressor();
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern void blosc_set_delta(int dodelta);
+        public static extern int blosc1_set_compressor([MarshalAs(UnmanagedType.LPStr)] string compname);
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern int blosc_compcode_to_compname(CompressorCodes compcode, ref IntPtr compname);
+        public static extern void blosc2_set_delta(int dodelta);
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern int blosc_compname_to_compcode([MarshalAs(UnmanagedType.LPStr)] string compname);
+        public static extern int blosc2_compcode_to_compname(CompressorCodes compcode, ref IntPtr compname);
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern IntPtr blosc_list_compressors();
+        public static extern int blosc2_compname_to_compcode([MarshalAs(UnmanagedType.LPStr)] string compname);
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern IntPtr blosc_get_version_string();
+        public static extern IntPtr blosc2_list_compressors();
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern int blosc_get_complib_info([MarshalAs(UnmanagedType.LPStr)] string compname, ref IntPtr complib,
-                                                ref IntPtr version);
+        public static extern IntPtr blosc2_get_version_string();
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern int blosc_free_resources();
+        public static extern int blosc2_get_complib_info([MarshalAs(UnmanagedType.LPStr)] string compname, ref IntPtr complib,
+                                                 ref IntPtr version);
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern void blosc_cbuffer_sizes(IntPtr cbuffer, out ulong nbytes,
-                                              out ulong cbytes, out ulong blocksize);
+        public static extern int blosc2_free_resources();
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern int blosc_cbuffer_validate(IntPtr cbuffer, ulong cbytes,
+        public static extern void blosc1_cbuffer_sizes(IntPtr cbuffer, out ulong nbytes,
+                                               out ulong cbytes, out ulong blocksize);
+        
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(BloscConstants.NATIVE_DLL_NAME)]
+        public static extern int blosc2_cbuffer_sizes(IntPtr cbuffer, IntPtr nbytes,
+                                              IntPtr cbytes, IntPtr blocksize);
+        
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(BloscConstants.NATIVE_DLL_NAME)]
+        public static extern int blosc1_cbuffer_validate(IntPtr cbuffer, ulong cbytes,
                                                  out ulong nbytes);
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern void blosc_cbuffer_metainfo(IntPtr cbuffer, out ulong typesize,
-                                                 IntPtr flags);
+        public static extern void blosc1_cbuffer_metainfo(IntPtr cbuffer, out ulong typesize,
+                                                  IntPtr flags);
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern void blosc_cbuffer_versions(IntPtr cbuffer, IntPtr version,
-                                                 IntPtr versionlz);
+        public static extern void blosc2_cbuffer_versions(IntPtr cbuffer, IntPtr version,
+                                                  IntPtr versionlz);
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern IntPtr blosc_cbuffer_complib(IntPtr cbuffer);
+        public static extern IntPtr blosc2_cbuffer_complib(IntPtr cbuffer);
+        
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(BloscConstants.NATIVE_DLL_NAME)]
+        public static extern int blosc2_register_io_cb(IntPtr io);
+        
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(BloscConstants.NATIVE_DLL_NAME)]
+        public static extern IntPtr blosc2_get_io_cb(byte id);
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
@@ -141,6 +159,14 @@ namespace Blosc2.PInvoke
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
         public static extern void blosc2_free_ctx(IntPtr context);
+        
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(BloscConstants.NATIVE_DLL_NAME)]
+        public static extern int blosc2_ctx_get_cparams(IntPtr ctx, IntPtr cparams);
+        
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(BloscConstants.NATIVE_DLL_NAME)]
+        public static extern int blosc2_ctx_get_dparams(IntPtr ctx, IntPtr dparams);
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
@@ -170,34 +196,115 @@ namespace Blosc2.PInvoke
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
+        public static extern int blosc2_chunk_zeros(blosc2_cparams cparams, int nbytes,
+                                            IntPtr dest, int destsize);
+        
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(BloscConstants.NATIVE_DLL_NAME)]
+        public static extern int blosc2_chunk_nans(blosc2_cparams cparams, int nbytes,
+                                           IntPtr dest, int destsize);
+        
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(BloscConstants.NATIVE_DLL_NAME)]
+        public static extern int blosc2_chunk_repeatval(blosc2_cparams cparams, int nbytes,
+                                                IntPtr dest, int destsize, IntPtr repeatval);
+        
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(BloscConstants.NATIVE_DLL_NAME)]
+        public static extern int blosc2_chunk_uninit(blosc2_cparams cparams, int nbytes,
+                                             IntPtr dest, int destsize);
+        
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(BloscConstants.NATIVE_DLL_NAME)]
         public static extern int blosc2_getitem_ctx(IntPtr context, IntPtr src,
-                                            int srcsize, int start, int nitems, IntPtr dest);
+                                            int srcsize, int start, int nitems, IntPtr dest,
+                                            int destsize);
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern IntPtr 
-        blosc2_new_schunk(blosc2_cparams cparams, blosc2_dparams dparams, IntPtr frame);
+        public static extern IntPtr blosc2_schunk_new(IntPtr storage);
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern int blosc2_free_schunk(IntPtr schunk);
+        public static extern IntPtr blosc2_schunk_copy(IntPtr schunk, IntPtr storage);
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern int blosc2_schunk_append_chunk(IntPtr schunk, IntPtr chunk, bool copy);
+        public static extern IntPtr blosc2_schunk_from_buffer(IntPtr cframe, long len, bool copy);
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern int blosc2_schunk_append_buffer(IntPtr schunk, IntPtr src, int nbytes);
+        public static extern void blosc2_schunk_avoid_cframe_free(IntPtr schunk, bool avoid_cframe_free);
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern int blosc2_schunk_decompress_chunk(IntPtr schunk, int nchunk, IntPtr dest, int nbytes);
+        public static extern IntPtr blosc2_schunk_open([MarshalAs(UnmanagedType.LPStr)] string urlpath);
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern int blosc2_schunk_get_chunk(IntPtr schunk, int nchunk, out IntPtr chunk,
+        public static extern IntPtr blosc2_schunk_open_offset([MarshalAs(UnmanagedType.LPStr)] string urlpath, long offset);
+        
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(BloscConstants.NATIVE_DLL_NAME)]
+        public static extern IntPtr blosc2_schunk_open_udio([MarshalAs(UnmanagedType.LPStr)] string urlpath, IntPtr udio);
+        
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(BloscConstants.NATIVE_DLL_NAME)]
+        public static extern long blosc2_schunk_to_buffer(IntPtr schunk, out IntPtr cframe, IntPtr needs_free);
+        
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(BloscConstants.NATIVE_DLL_NAME)]
+        public static extern long blosc2_schunk_to_file(IntPtr schunk, [MarshalAs(UnmanagedType.LPStr)] string urlpath);
+        
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(BloscConstants.NATIVE_DLL_NAME)]
+        public static extern long blosc2_schunk_append_file(IntPtr schunk, [MarshalAs(UnmanagedType.LPStr)] string urlpath);
+        
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(BloscConstants.NATIVE_DLL_NAME)]
+        public static extern int blosc2_schunk_free(IntPtr schunk);
+        
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(BloscConstants.NATIVE_DLL_NAME)]
+        public static extern long blosc2_schunk_append_chunk(IntPtr schunk, IntPtr chunk, bool copy);
+        
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(BloscConstants.NATIVE_DLL_NAME)]
+        public static extern long blosc2_schunk_update_chunk(IntPtr schunk, long nchunk, IntPtr chunk, bool copy);
+        
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(BloscConstants.NATIVE_DLL_NAME)]
+        public static extern long blosc2_schunk_insert_chunk(IntPtr schunk, long nchunk, IntPtr chunk, bool copy);
+        
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(BloscConstants.NATIVE_DLL_NAME)]
+        public static extern long blosc2_schunk_delete_chunk(IntPtr schunk, long nchunk);
+        
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(BloscConstants.NATIVE_DLL_NAME)]
+        public static extern long blosc2_schunk_append_buffer(IntPtr schunk, IntPtr src, int nbytes);
+        
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(BloscConstants.NATIVE_DLL_NAME)]
+        public static extern int blosc2_schunk_decompress_chunk(IntPtr schunk, long nchunk, IntPtr dest, int nbytes);
+        
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(BloscConstants.NATIVE_DLL_NAME)]
+        public static extern int blosc2_schunk_get_chunk(IntPtr schunk, long nchunk, out IntPtr chunk,
                                                  IntPtr needs_free);
+        
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(BloscConstants.NATIVE_DLL_NAME)]
+        public static extern int blosc2_schunk_get_lazychunk(IntPtr schunk, long nchunk, out IntPtr chunk,
+                                                     IntPtr needs_free);
+        
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(BloscConstants.NATIVE_DLL_NAME)]
+        public static extern int blosc2_schunk_get_slice_buffer(IntPtr schunk, long start, long stop, IntPtr buffer);
+        
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(BloscConstants.NATIVE_DLL_NAME)]
+        public static extern int blosc2_schunk_set_slice_buffer(IntPtr schunk, long start, long stop, IntPtr buffer);
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
@@ -213,59 +320,60 @@ namespace Blosc2.PInvoke
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern int blosc2_has_metalayer(IntPtr schunk, IntPtr name);
+        public static extern long blosc2_schunk_frame_len(IntPtr schunk);
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern int blosc2_add_metalayer(IntPtr schunk, IntPtr name, IntPtr content,
-                                              uint content_len);
+        public static extern long blosc2_schunk_fill_special(IntPtr schunk, long nitems,
+                                                    int special_value, int chunksize);
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern int blosc2_update_metalayer(IntPtr schunk, IntPtr name, IntPtr content,
-                                                 uint content_len);
+        public static extern int blosc2_meta_exists(IntPtr schunk, IntPtr name);
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern int blosc2_get_metalayer(IntPtr schunk, IntPtr name, out IntPtr content,
-                                              IntPtr content_len);
+        public static extern int blosc2_meta_add(IntPtr schunk, IntPtr name, IntPtr content,
+                                         int content_len);
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern int blosc2_update_usermeta(IntPtr schunk, IntPtr content,
-                                                int content_len, blosc2_cparams cparams);
+        public static extern int blosc2_meta_update(IntPtr schunk, IntPtr name, IntPtr content,
+                                            int content_len);
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern int blosc2_get_usermeta(IntPtr schunk, out IntPtr content);
+        public static extern int blosc2_meta_get(IntPtr schunk, IntPtr name, out IntPtr content,
+                                         IntPtr content_len);
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern IntPtr blosc2_new_frame([MarshalAs(UnmanagedType.LPStr)] string fname);
+        public static extern int blosc2_vlmeta_exists(IntPtr schunk, IntPtr name);
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern long blosc2_schunk_to_frame(IntPtr schunk, IntPtr frame);
+        public static extern int blosc2_vlmeta_add(IntPtr schunk, IntPtr name,
+                                           IntPtr content, int content_len,
+                                           IntPtr cparams);
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern int blosc2_free_frame(IntPtr frame);
+        public static extern int blosc2_vlmeta_update(IntPtr schunk, IntPtr name,
+                                              IntPtr content, int content_len,
+                                              IntPtr cparams);
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern long blosc2_frame_to_file(IntPtr frame, IntPtr fname);
+        public static extern int blosc2_vlmeta_get(IntPtr schunk, IntPtr name,
+                                           out IntPtr content, IntPtr content_len);
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern IntPtr blosc2_frame_from_file(IntPtr fname);
+        public static extern int blosc2_vlmeta_delete(IntPtr schunk, IntPtr name);
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern IntPtr blosc2_frame_from_sframe(IntPtr sframe, long len, bool copy);
-        
-        [SuppressUnmanagedCodeSecurity]
-        [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern IntPtr blosc2_schunk_from_frame(IntPtr frame, bool copy);
+        public static extern int blosc2_vlmeta_get_names(IntPtr schunk, out IntPtr names);
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
@@ -283,15 +391,47 @@ namespace Blosc2.PInvoke
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern int blosc_get_blocksize();
+        public static extern int blosc1_get_blocksize();
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern void blosc_set_blocksize(ulong blocksize);
+        public static extern void blosc1_set_blocksize(ulong blocksize);
         
         [SuppressUnmanagedCodeSecurity]
         [DllImport(BloscConstants.NATIVE_DLL_NAME)]
-        public static extern void blosc_set_schunk(IntPtr schunk);
+        public static extern void blosc1_set_splitmode(int splitmode);
+        
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(BloscConstants.NATIVE_DLL_NAME)]
+        public static extern IntPtr blosc2_frame_get_offsets(IntPtr schunk);
+        
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(BloscConstants.NATIVE_DLL_NAME)]
+        public static extern int blosc2_register_codec(IntPtr codec);
+        
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(BloscConstants.NATIVE_DLL_NAME)]
+        public static extern int blosc2_register_filter(IntPtr filter);
+        
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(BloscConstants.NATIVE_DLL_NAME)]
+        public static extern int blosc2_remove_dir(IntPtr path);
+        
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(BloscConstants.NATIVE_DLL_NAME)]
+        public static extern int blosc2_remove_urlpath(IntPtr path);
+        
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(BloscConstants.NATIVE_DLL_NAME)]
+        public static extern int blosc2_rename_urlpath([MarshalAs(UnmanagedType.LPStr)] string old_urlpath, [MarshalAs(UnmanagedType.LPStr)] string new_path);
+        
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(BloscConstants.NATIVE_DLL_NAME)]
+        public static extern void blosc2_unidim_to_multidim(byte ndim, IntPtr shape, long i, IntPtr index);
+        
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(BloscConstants.NATIVE_DLL_NAME)]
+        public static extern void blosc2_multidim_to_unidim(IntPtr index, sbyte ndim, IntPtr strides, IntPtr i);
         
             }
 }

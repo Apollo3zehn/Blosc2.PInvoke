@@ -5,13 +5,13 @@
 <# 
 	using var webClient = new WebClient();
 
-    var url = "./native/c-blosc2/blosc/blosc2.h";
+    var url = "./native/c-blosc2/include/blosc2.h";
     var cstring = webClient.DownloadString(url); 
     var csstring = "";
 
     var pattern = "BLOSC_EXPORT.*?;";
     var regex = new Regex(pattern, RegexOptions.Singleline);
-
+    
     foreach (var match in regex.Matches(cstring))
     {
         csstring += "[SuppressUnmanagedCodeSecurity]\n";
@@ -24,6 +24,9 @@
     csstring = Regex.Replace(csstring, @"const ", "");
     csstring = Regex.Replace(csstring, @"char\*\*", "ref IntPtr");
     csstring = Regex.Replace(csstring, @"char\*", "[MarshalAs(UnmanagedType.LPStr)] string");
+    csstring = Regex.Replace(csstring, @"uint8_t", "byte");
+    csstring = Regex.Replace(csstring, @"int8_t", "sbyte");
+    csstring = Regex.Replace(csstring, @"int16_t", "short");
     csstring = Regex.Replace(csstring, @"int32_t", "int");
     csstring = Regex.Replace(csstring, @"int64_t", "long");
     csstring = Regex.Replace(csstring, @"blosc_timestamp_t", "IntPtr");
@@ -65,8 +68,7 @@ namespace Blosc2.PInvoke
           
             try
             {
-                if (Blosc.blosc_init())
-                    throw new Exception("Could not initialize Blosc library.");
+                Blosc.blosc2_init();
             }
             finally
             {
