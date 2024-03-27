@@ -6,7 +6,7 @@ namespace Blosc2.PInvoke
     {
         public const int BLOSC2_MAX_FILTERS = 6;
 
-        public const string NATIVE_DLL_NAME = "blosc2";
+        public const string NATIVE_DLL_NAME = "libblosc2";
 
         public const string WindowsDLLPath = @"runtimes\win-x{0}\native";
 
