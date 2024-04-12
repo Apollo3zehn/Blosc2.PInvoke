@@ -27,6 +27,7 @@
     csstring = Regex.Replace(csstring, @"uint8_t", "byte");
     csstring = Regex.Replace(csstring, @"int8_t", "sbyte");
     csstring = Regex.Replace(csstring, @"int16_t", "short");
+    csstring = Regex.Replace(csstring, @"int32_t\*", "out int");
     csstring = Regex.Replace(csstring, @"int32_t", "int");
     csstring = Regex.Replace(csstring, @"int64_t", "long");
     csstring = Regex.Replace(csstring, @"blosc_timestamp_t", "IntPtr");
